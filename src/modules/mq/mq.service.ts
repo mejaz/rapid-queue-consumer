@@ -40,7 +40,7 @@ export class MqService implements OnModuleInit {
 
   private async consumeEmailMessages(channel: ConfirmChannel) {
     try {
-      await channel.prefetch(10);
+      await channel.prefetch(5);
       await channel.consume(this.emailQueue, (message) => this.handleEmailMessages(channel, message));
 
     } catch (err) {
@@ -54,6 +54,7 @@ export class MqService implements OnModuleInit {
     try {
       // mocking a delay for sending email
       await this.delay(3000);  // 3 seconds
+      console.log(data.content.toString());
       console.log('-- email sent successfully --');
       channel.ack(data);
     } catch (e) {
